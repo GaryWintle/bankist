@@ -138,7 +138,7 @@ btnLogin.addEventListener('click', function (e) {
   e.preventDefault();
 
   currentAccount = accounts.find(
-    acc => acc.username === inputLoginUsername.value
+    acc => acc.username.toLowerCase() === inputLoginUsername.value.toLowerCase()
   );
   console.log(currentAccount);
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
@@ -165,7 +165,7 @@ btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
   const amount = Number(inputTransferAmount.value);
   const receiverAcc = accounts.find(
-    acc => acc.username === inputTransferTo.value
+    acc => acc.username.toLowerCase() === inputTransferTo.value.toLowerCase()
   );
   inputTransferAmount.value = inputTransferTo.value = '';
 
