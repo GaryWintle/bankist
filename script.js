@@ -189,11 +189,13 @@ btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
   if (
-    currentAccount.username === inputCloseUsername.value &&
+    currentAccount.username.toLowerCase() ===
+      inputCloseUsername.value.toLowerCase() &&
     currentAccount.pin === Number(inputClosePin.value)
   ) {
     const index = accounts.findIndex(
-      acc => acc.username === currentAccount.username
+      acc =>
+        acc.username.toLowerCase() === currentAccount.username.toLowerCase()
     );
 
     // Delete Account
