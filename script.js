@@ -140,7 +140,7 @@ btnLogin.addEventListener('click', function (e) {
   currentAccount = accounts.find(
     acc => acc.username.toLowerCase() === inputLoginUsername.value.toLowerCase()
   );
-  console.log(currentAccount);
+  console.log(`Logging in... ${currentAccount.owner}...`);
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and Welcome Message
     labelWelcome.textContent = `Welcome back, ${
@@ -160,7 +160,7 @@ btnLogin.addEventListener('click', function (e) {
   }
 });
 
-// Transfer Money Functionality
+// Transfer Money Button
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
   const amount = Number(inputTransferAmount.value);
@@ -185,6 +185,23 @@ btnTransfer.addEventListener('click', function (e) {
   }
 });
 
+// Loan Button
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    currentAccount.movements.push(amount);
+
+    //Update UI
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+
+// Close Account Button
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
@@ -227,6 +244,15 @@ console.log(movements.includes(-130));
 
 const anyDeposits = movements.some(mov => mov > 0);
 console.log(anyDeposits);
+
+const everyDeposits = movements.every(mov => mov > 0);
+console.log(everyDeposits);
+
+const deposit = mov => mov > 0;
+
+console.log(movements.some(deposit));
+console.log(movements.every(deposit));
+console.log(movements.filter(deposit));
 
 // const lastWithdrawal = movements.findLast(acc => 0 > acc);
 
