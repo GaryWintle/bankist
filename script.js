@@ -116,13 +116,18 @@ const displayMovements = function (acc, sort = false) {
     const date = new Date(movementDate);
     const displayDate = formatMovementDate(date, acc.locale);
 
+    const formattedMov = new Intl.NumberFormat(acc.locale, {
+      style: 'currency',
+      currency: 'JPY',
+    }).format(obj.movement);
+
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
       <div class="movements__date">${displayDate}</div>
-      <div class="movements__value">${movement.toFixed(2)}円</div>
+      <div class="movements__value">${formattedMov}</div>
     </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
@@ -187,9 +192,9 @@ const updateUI = function (acc) {
 let currentAccount;
 
 // Fake always logged in
-// currentAccount = account1;
-// updateUI(currentAccount);
-// containerApp.style.opacity = 100;
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
 
 // Login Button
 btnLogin.addEventListener('click', function (e) {
@@ -468,3 +473,21 @@ btnSort.addEventListener('click', function (e) {
 // const days1 = calcDaysPassed(new Date(2023, 2, 16), new Date(2025, 1, 4));
 
 // console.log(`Casey is ${days1} days old!`);
+
+const num = 24234.32;
+
+const options = {
+  style: 'currency',
+  currency: 'JPY',
+  // useGrouping: false,
+};
+
+console.log('USA:   ', new Intl.NumberFormat('en-US', options).format(num));
+console.log('Germany:', new Intl.NumberFormat('de-DE', options).format(num));
+console.log('Syria:', new Intl.NumberFormat('ar-SY', options).format(num));
+console.log('Japan:', new Intl.NumberFormat('ja-JP', options).format(num));
+
+console.log(
+  navigator.language,
+  new Intl.NumberFormat(navigator.language, options).format(num)
+);
